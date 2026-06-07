@@ -1,8 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
+		<!-- ▼2026.06.07 一時的にコメントアウト（ビルド速度向上のため）
 		<TargetFrameworks>net10.0-android</TargetFrameworks>
 		<TargetFrameworks Condition="!$([MSBuild]::IsOSPlatform('linux'))">$(TargetFrameworks);net10.0-ios;net10.0-maccatalyst</TargetFrameworks>
+			 ▲2026.06.07 一時的にコメントアウト（ビルド速度向上のため）   -->
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net10.0-windows10.0.19041.0</TargetFrameworks>
 
 		<!-- Note for MacCatalyst:
@@ -68,6 +70,23 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Features\Login\" />
+	  <Folder Include="Features\M_Course\Services\" />
+	  <Folder Include="Features\M_Course\ViewModels\" />
+	  <Folder Include="Infrastructure\Database\" />
+	  <Folder Include="Infrastructure\Api\" />
+	  <Folder Include="Infrastructure\Camera\" />
+	  <Folder Include="Infrastructure\Barcode\" />
+	  <Folder Include="Infrastructure\Storage\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Features\M_Course\M_Course.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
