@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AppTravel.Features.M_Customer.Views.M_Customer"
+             Shell.NavBarIsVisible="True"
+             Title="顧客マスタ登録">
+    <VerticalStackLayout
+        Margin="10, 20"
+        Padding="5"
+        Spacing="10">
+        <Label 
+            Text="顧客コード"
+            WidthRequest="100"
+            VerticalOptions="Start" 
+            HorizontalOptions="Start" />
+        <Entry 
+            WidthRequest="100"
+            VerticalOptions="Start" 
+            HorizontalOptions="Start"/>
+        <Label 
+            Text="メールアドレス"
+            WidthRequest="100"
+            VerticalOptions="Start" 
+            HorizontalOptions="Start"/>
+        <Entry 
+               Keyboard="Email" 
+               WidthRequest="100"
+               VerticalOptions="Start" 
+               HorizontalOptions="Start"/>
+        <Button 
+                Text="保存" 
+                TextColor="Red"
+                WidthRequest="100"
+                VerticalOptions="Start"
+                HorizontalOptions="Start"/>
+
+    </VerticalStackLayout>
+</ContentPage>

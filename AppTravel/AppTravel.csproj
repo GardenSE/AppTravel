@@ -73,9 +73,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Folder Include="Features\C_Top\Services\" />
+	  <Folder Include="Features\C_Top\ViewModels\" />
 	  <Folder Include="Features\Login\" />
 	  <Folder Include="Features\M_Course\Services\" />
 	  <Folder Include="Features\M_Course\ViewModels\" />
+	  <Folder Include="Features\M_Customer\Servuces\" />
+	  <Folder Include="Features\M_Customer\ViewModels\" />
 	  <Folder Include="Infrastructure\Database\" />
 	  <Folder Include="Infrastructure\Api\" />
 	  <Folder Include="Infrastructure\Camera\" />
@@ -84,7 +88,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Features\C_Top\Views\C_Top.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Features\M_Course\M_Course.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Features\M_Customer\Views\M_Customer.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
