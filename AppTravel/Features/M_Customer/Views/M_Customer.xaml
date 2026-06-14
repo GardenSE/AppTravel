@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:AppTravel.Features.M_Customer.ViewModels"
              x:Class="AppTravel.Features.M_Customer.Views.M_Customer"
+             x:DataType="viewModels:M_CustomerViewModel"
              Shell.NavBarIsVisible="True"
              Title="顧客マスタ登録">
     <VerticalStackLayout
@@ -14,9 +16,21 @@
             VerticalOptions="Start" 
             HorizontalOptions="Start" />
         <Entry 
-            WidthRequest="100"
+            WidthRequest="150"
             VerticalOptions="Start" 
-            HorizontalOptions="Start"/>
+            HorizontalOptions="Start"
+            Text="{Binding CustomerCode}"
+            />
+        <Label 
+             Text="顧客名"
+             WidthRequest="100"
+             VerticalOptions="Start" 
+             HorizontalOptions="Start" />
+        <Entry 
+             WidthRequest="300"
+             VerticalOptions="Start" 
+             HorizontalOptions="Start"
+             Text="{Binding CustomerName}"/>
         <Label 
             Text="メールアドレス"
             WidthRequest="100"
@@ -24,15 +38,17 @@
             HorizontalOptions="Start"/>
         <Entry 
                Keyboard="Email" 
-               WidthRequest="100"
+               WidthRequest="400"
                VerticalOptions="Start" 
-               HorizontalOptions="Start"/>
+               HorizontalOptions="Start"
+               Text="{Binding MailAddress}"/>
         <Button 
                 Text="保存" 
                 TextColor="Red"
                 WidthRequest="100"
                 VerticalOptions="Start"
-                HorizontalOptions="Start"/>
+                HorizontalOptions="Start"
+                IsEnabled="{Binding RegisterButtonEnabled}"/>
 
     </VerticalStackLayout>
 </ContentPage>

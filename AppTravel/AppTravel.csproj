@@ -73,18 +73,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Features\C_Top\Services\" />
-	  <Folder Include="Features\C_Top\ViewModels\" />
 	  <Folder Include="Features\Login\" />
-	  <Folder Include="Features\M_Course\Services\" />
-	  <Folder Include="Features\M_Course\ViewModels\" />
-	  <Folder Include="Features\M_Customer\Servuces\" />
-	  <Folder Include="Features\M_Customer\ViewModels\" />
-	  <Folder Include="Infrastructure\Database\" />
-	  <Folder Include="Infrastructure\Api\" />
-	  <Folder Include="Infrastructure\Camera\" />
-	  <Folder Include="Infrastructure\Barcode\" />
-	  <Folder Include="Infrastructure\Storage\" />
 	</ItemGroup>
 
 	<ItemGroup>
