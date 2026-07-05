@@ -74,6 +74,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Features\Login\" />
+	  <Folder Include="MVVM\" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -10,7 +10,12 @@
         Margin="10, 20"
         Padding="5"
         Spacing="10">
-        <Label 
+    <Label 
+            Text="{Binding Path=Message}"
+            VerticalOptions="Start"
+            HorizontalOptions="Start"
+            WidthRequest="100"/>
+    <Label 
             Text="顧客コード"
             WidthRequest="100"
             VerticalOptions="Start" 
@@ -19,7 +24,7 @@
             WidthRequest="150"
             VerticalOptions="Start" 
             HorizontalOptions="Start"
-            Text="{Binding CustomerCode}"
+            Text="{Binding Path=CustomerCode, Mode=TwoWay}"
             />
         <Label 
              Text="顧客名"
@@ -30,7 +35,7 @@
              WidthRequest="300"
              VerticalOptions="Start" 
              HorizontalOptions="Start"
-             Text="{Binding CustomerName}"/>
+             Text="{Binding Path=CustomerName, Mode=TwoWay}"/>
         <Label 
             Text="メールアドレス"
             WidthRequest="100"
@@ -41,14 +46,14 @@
                WidthRequest="400"
                VerticalOptions="Start" 
                HorizontalOptions="Start"
-               Text="{Binding MailAddress}"/>
+               Text="{Binding Path=MailAddress, Mode=TwoWay}"/>
         <Button 
                 Text="保存" 
                 TextColor="Red"
                 WidthRequest="100"
                 VerticalOptions="Start"
                 HorizontalOptions="Start"
-                IsEnabled="{Binding RegisterButtonEnabled}"/>
+                IsEnabled="{Binding Path=CanSave}"/>
 
     </VerticalStackLayout>
 </ContentPage>

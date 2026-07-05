@@ -4,10 +4,11 @@ using System.Text;
 using System.Text.Json.Serialization;
 using AppTravel.Features.M_Customer.Dtos;
 using AppTravel.Features.M_Customer.Services;
+using AppTravel.MVVM.Base;
 
 namespace AppTravel.Features.M_Customer.ViewModels
 {
-    public class M_CustomerViewModel
+    public class M_CustomerViewModel : ViewModelBase
     {
         private readonly IM_CustomerService _service;
 
@@ -15,23 +16,22 @@ namespace AppTravel.Features.M_Customer.ViewModels
         /// <summary>
         /// 顧客コード
         /// </summary>
-        public string CustomerCode { get; set; } = string.Empty;
+        private string _customerCode = string.Empty;
 
         /// <summary>
         /// 顧客名
         /// </summary>
-        public string CustomerName { get; set; } = string.Empty;
+        private string _customerName = string.Empty;
 
         /// <summary>
         /// メールアドレス
         /// </summary>
-        public string MailAddress { get; set; } = string.Empty;
+        private string _mailAddress = string.Empty;
 
         /// <summary>
-        /// 登録ボタン使用可否
+        /// 入力ガイダンスメッセージ
         /// </summary>
-        /// <remarks>true=使用可/false=使用不可</remarks>
-        public bool RegisterButtonEnabled { get; set; } = false;
+        private string _message = string.Empty;
         #endregion
 
 
@@ -39,22 +39,103 @@ namespace AppTravel.Features.M_Customer.ViewModels
         /// コンストラクタ
         /// </summary>
         /// <param name="service"></param>
-        public M_CustomerViewModel(IM_CustomerService service) 
+        public M_CustomerViewModel(IM_CustomerService service)
         {
             _service = service;
 
         }
 
+        #region <プロパティ（CommunityToolkit.Mvvmを導入すると、不要になるかも）>
+
+        /// <summary>
+        /// 顧客コードプロパティ
+        /// </summary>
+        public string CustomerCode
+        {
+            get => _customerCode;
+            set
+            {
+                if (SetProperty(ref _customerCode, value))
+                {
+                    OnPropertyChanged(nameof(CanSave));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 顧客名プロパティ
+        /// </summary>
+        public string CustomerName
+        {
+            get => _customerName;
+            set
+            {
+                if (SetProperty(ref _customerName, value))
+                {
+                    OnPropertyChanged(nameof(CanSave));
+                }
+            }
+        }
+
+        /// <summary>
+        /// メールアドレスプロパティ
+        /// </summary>
+        public string MailAddress
+        {
+            get => _mailAddress;
+            set
+            {
+                if (SetProperty(ref _mailAddress, value))
+                {
+                    OnPropertyChanged(nameof(CanSave));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 入力ガイダンスメッセージプロパティ
+        /// </summary>
+        public string Message
+        {
+            get => _message;
+            set => SetProperty(ref _message, value);
+        }
+        #endregion
+
         #region <画面操作に対応する処理>
         /// <summary>
-        /// 登録
+        /// 登録ボタンの使用可否状態を判定する
         /// </summary>
-        /// <returns>true=保存可能/false=保存不可</returns>
+        /// <returns>
+        /// true: 保存可能
+        /// false: 保存不可
+        /// </returns>
         /// <remarks>顧客コード、顧客名、メールアドレスが全て入力されている時、保存可能</remarks>
-        public bool CanSave() =>
+        public bool CanSave =>
             !string.IsNullOrEmpty(CustomerCode)
             && !string.IsNullOrEmpty(CustomerName)
             && !string.IsNullOrEmpty(MailAddress);
+
+        public void Save()
+        {
+            if (!CanSave)
+            {
+                Message = "入力内容を確認してください。";
+                return;
+            }
+
+            try
+            {
+                Message = $"{CustomerCode} : {CustomerName} を保存しました。";
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+            }
+        }
         #endregion
     }
 }
