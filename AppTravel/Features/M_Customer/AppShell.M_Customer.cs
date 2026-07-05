@@ -12,7 +12,7 @@ namespace AppTravel
         /// </summary>
         private static void RegisterRoutesM_Customer()
         {
-            Routing.RegisterRoute(nameof(M_Customer), typeof(M_Customer));
+            Routing.RegisterRoute(nameof(M_CustomerPage), typeof(M_CustomerPage));
         }
     }
 }

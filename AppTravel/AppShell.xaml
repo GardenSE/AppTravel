@@ -11,15 +11,15 @@
 
     <FlyoutItem Title="トップ">
         <ShellContent
-            ContentTemplate="{DataTemplate c_top:C_Top}" />
+            ContentTemplate="{DataTemplate c_top:C_TopPage}" />
     </FlyoutItem>
     <FlyoutItem Title="顧客マスタ登録">
         <ShellContent
-            ContentTemplate="{DataTemplate m_customer:M_Customer}" />
+            ContentTemplate="{DataTemplate m_customer:M_CustomerPage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="コースマスタ登録">
         <ShellContent
-            ContentTemplate="{DataTemplate m_course:M_Course}" />
+            ContentTemplate="{DataTemplate m_course:M_CoursePage}" />
     </FlyoutItem>
 </Shell>

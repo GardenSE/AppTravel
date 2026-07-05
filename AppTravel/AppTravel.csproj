@@ -77,13 +77,25 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Features\C_Top\Views\C_Top.xaml">
+	  <Compile Update="Features\C_Top\Views\C_TopPage.xaml.cs">
+	    <DependentUpon>C_TopPage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Features\M_Course\Views\M_CoursePage.xaml.cs">
+	    <DependentUpon>M_CoursePage.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Features\M_Customer\Views\M_CustomerPage.xaml.cs">
+	    <DependentUpon>M_CustomerPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Features\C_Top\Views\C_TopPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Features\M_Course\M_Course.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Features\M_Customer\Views\M_Customer.xaml">
+	  <MauiXaml Update="Features\M_Customer\Views\M_CustomerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

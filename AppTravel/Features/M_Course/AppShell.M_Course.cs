@@ -18,7 +18,7 @@ namespace AppTravel
         /// </summary>
         private static void RegisterRoutesM_Course()
         {
-            Routing.RegisterRoute(nameof(M_Course), typeof(M_Course));
+            Routing.RegisterRoute(nameof(M_CoursePage), typeof(M_CoursePage));
         }
     }
 }

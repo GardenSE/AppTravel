@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AppTravel.Features.M_Customer;
+using AppTravel.Infrastructure.DI;
+using Microsoft.Extensions.Logging;
 
 namespace AppTravel
 {
@@ -18,6 +20,8 @@ namespace AppTravel
 #if DEBUG
     		builder.Logging.AddDebug();
 #endif
+
+            builder.Services.AddFeatures();
 
             return builder.Build();
         }
