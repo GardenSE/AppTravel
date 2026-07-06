@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
-using AppTravel.Features.M_Customer.Dtos;
 using AppTravel.Features.M_Customer.Services;
 using AppTravel.MVVM.Base;
+using AppTravel.MVVM.Command;
 
 namespace AppTravel.Features.M_Customer.ViewModels
 {
@@ -32,6 +32,16 @@ namespace AppTravel.Features.M_Customer.ViewModels
         /// 入力ガイダンスメッセージ
         /// </summary>
         private string _message = string.Empty;
+
+        /// <summary>
+        /// 登録処理
+        /// </summary>
+        public RelayCommand SaveCommand { get; }
+
+        /// <summary>
+        /// クリア処理
+        /// </summary>
+        public RelayCommand ClearCommand { get; }
         #endregion
 
 
@@ -42,7 +52,10 @@ namespace AppTravel.Features.M_Customer.ViewModels
         public M_CustomerViewModel(IM_CustomerService service)
         {
             _service = service;
+            Title = "顧客マスタ登録";
 
+            SaveCommand = new RelayCommand(Save, CanSave);
+            ClearCommand = new RelayCommand(Clear, CanClear);
         }
 
         #region <プロパティ（CommunityToolkit.Mvvmを導入すると、不要になるかも）>
@@ -57,7 +70,8 @@ namespace AppTravel.Features.M_Customer.ViewModels
             {
                 if (SetProperty(ref _customerCode, value))
                 {
-                    OnPropertyChanged(nameof(CanSave));
+                    SaveCommand.RaiseCanExecuteChanged();
+                    ClearCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -72,7 +86,8 @@ namespace AppTravel.Features.M_Customer.ViewModels
             {
                 if (SetProperty(ref _customerName, value))
                 {
-                    OnPropertyChanged(nameof(CanSave));
+                    SaveCommand.RaiseCanExecuteChanged();
+                    ClearCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -87,7 +102,8 @@ namespace AppTravel.Features.M_Customer.ViewModels
             {
                 if (SetProperty(ref _mailAddress, value))
                 {
-                    OnPropertyChanged(nameof(CanSave));
+                    SaveCommand.RaiseCanExecuteChanged();
+                    ClearCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -111,14 +127,32 @@ namespace AppTravel.Features.M_Customer.ViewModels
         /// false: 保存不可
         /// </returns>
         /// <remarks>顧客コード、顧客名、メールアドレスが全て入力されている時、保存可能</remarks>
-        public bool CanSave =>
-            !string.IsNullOrEmpty(CustomerCode)
-            && !string.IsNullOrEmpty(CustomerName)
-            && !string.IsNullOrEmpty(MailAddress);
+        public bool CanSave()
+        {
+            return !string.IsNullOrEmpty(CustomerCode)
+                   && !string.IsNullOrEmpty(CustomerName)
+                   && !string.IsNullOrEmpty(MailAddress);
+        }
+
+        /// <summary>
+        /// クリアボタンの使用可否を判定する
+        /// </summary>
+        /// <returns>
+        /// true: クリアボタン使用可能
+        /// false: クリアボタン使用不可
+        /// </returns>
+        public bool CanClear()
+        {
+            return !(string.IsNullOrEmpty(CustomerCode)
+                        && string.IsNullOrEmpty(CustomerName)
+                        && string.IsNullOrEmpty(MailAddress)
+                        && string.IsNullOrEmpty(Message));
+        }
+           
 
         public void Save()
         {
-            if (!CanSave)
+            if (!CanSave())
             {
                 Message = "入力内容を確認してください。";
                 return;
@@ -135,6 +169,18 @@ namespace AppTravel.Features.M_Customer.ViewModels
             finally
             {
             }
+        }
+
+        /// <summary>
+        /// 画面初期化
+        /// </summary>
+        public void Clear()
+        {
+            CustomerCode = string.Empty;
+            CustomerName = string.Empty;
+            MailAddress = string.Empty;
+            Message = string.Empty;
+            ClearCommand.RaiseCanExecuteChanged();
         }
         #endregion
     }

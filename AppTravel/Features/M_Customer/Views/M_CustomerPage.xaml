@@ -5,7 +5,7 @@
              x:Class="AppTravel.Features.M_Customer.Views.M_CustomerPage"
              x:DataType="viewModels:M_CustomerViewModel"
              Shell.NavBarIsVisible="True"
-             Title="顧客マスタ登録">
+             Title="{Binding Path=Title}">
     <VerticalStackLayout
         Margin="10, 20"
         Padding="5"
@@ -14,7 +14,7 @@
             Text="{Binding Path=Message}"
             VerticalOptions="Start"
             HorizontalOptions="Start"
-            WidthRequest="100"/>
+            WidthRequest="400"/>
     <Label 
             Text="顧客コード"
             WidthRequest="100"
@@ -53,7 +53,15 @@
                 WidthRequest="100"
                 VerticalOptions="Start"
                 HorizontalOptions="Start"
-                IsEnabled="{Binding Path=CanSave}"/>
+                Command="{Binding Path=SaveCommand}"/>
+        <Button 
+                Text="クリア"
+                TextColor="Blue"
+                WidthRequest="100"
+                VerticalOptions="Start"
+                HorizontalOptions="Start"
+                IsEnabled="True"
+                Command="{Binding Path=ClearCommand}" />
 
-    </VerticalStackLayout>
+  </VerticalStackLayout>
 </ContentPage>
