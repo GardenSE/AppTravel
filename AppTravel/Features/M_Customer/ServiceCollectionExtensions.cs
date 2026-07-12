@@ -4,6 +4,7 @@ using System.Text;
 using AppTravel.Features.M_Customer.Views;
 using AppTravel.Features.M_Customer.Services;
 using AppTravel.Features.M_Customer.ViewModels;
+using AppTravel.Features.M_Customer.Repositories;
 
 namespace AppTravel.Features.M_Customer
 {
@@ -17,8 +18,7 @@ namespace AppTravel.Features.M_Customer
 
             services.AddTransient<IM_CustomerService, M_CustomerService>();
 
-            // 将来Repositoryを追加したらここ
-            // services.AddTransient<IM_CustomerRepository, M_CustomerRepository>();
+            services.AddTransient<IM_CustomerRepository, M_CustomerRepository>();
 
             return services;
         }
