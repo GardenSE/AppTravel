@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
+using AppTravel.Features.M_Customer.Models;
 using AppTravel.Features.M_Customer.Services;
 using AppTravel.MVVM.Base;
 using AppTravel.MVVM.Command;
@@ -152,23 +153,31 @@ namespace AppTravel.Features.M_Customer.ViewModels
 
         public void Save()
         {
-            if (!CanSave())
-            {
-                Message = "入力内容を確認してください。";
-                return;
-            }
+            //if (!CanSave())
+            //{
+            //    Message = "入力内容を確認してください。";
+            //    return;
+            //}
 
-            try
-            {
-                Message = $"{CustomerCode} : {CustomerName} を保存しました。";
-            }
-            catch (Exception)
-            {
+            //try
+            //{
+            //    Customer customer = new Customer(
+            //        CustomerCode,
+            //        CustomerName,
+            //        MailAddress
+            //    );
+            //    await _service.SaveAsync(customer);
+            //    Message = $"{customer.Code} : {CustomerName} を保存しました。";
+            //}
+            //catch (Exception)
+            //{
 
-            }
-            finally
-            {
-            }
+            //}
+            //finally
+            //{
+            //}
+
+            _ = SaveAsync();
         }
 
         /// <summary>
@@ -181,6 +190,11 @@ namespace AppTravel.Features.M_Customer.ViewModels
             MailAddress = string.Empty;
             Message = string.Empty;
             ClearCommand.RaiseCanExecuteChanged();
+        }
+
+        private async Task SaveAsync()
+        {
+            // ToDo
         }
         #endregion
     }
