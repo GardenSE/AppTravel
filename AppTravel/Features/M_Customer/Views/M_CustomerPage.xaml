@@ -47,20 +47,19 @@
                VerticalOptions="Start" 
                HorizontalOptions="Start"
                Text="{Binding Path=MailAddress, Mode=TwoWay}"/>
-        <Button 
+    <Button 
                 Text="保存" 
                 TextColor="Red"
                 WidthRequest="100"
                 VerticalOptions="Start"
                 HorizontalOptions="Start"
-                Command="{Binding Path=SaveCommand}"/>
-        <Button 
+                Command="{Binding Path=SaveCommand}" />
+    <Button 
                 Text="クリア"
                 TextColor="Blue"
                 WidthRequest="100"
                 VerticalOptions="Start"
                 HorizontalOptions="Start"
-                IsEnabled="True"
                 Command="{Binding Path=ClearCommand}" />
 
   </VerticalStackLayout>

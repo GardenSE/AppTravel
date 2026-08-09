@@ -28,7 +28,6 @@ namespace AppTravel.Features.M_Customer.Services
         public async Task SaveAsync(Customer customoer)
         {
 
-            // TodDo: DBアクセス
 
         }
 

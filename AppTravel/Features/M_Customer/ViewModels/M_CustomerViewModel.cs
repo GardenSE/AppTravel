@@ -6,10 +6,12 @@ using AppTravel.Features.M_Customer.Models;
 using AppTravel.Features.M_Customer.Services;
 using AppTravel.MVVM.Base;
 using AppTravel.MVVM.Command;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace AppTravel.Features.M_Customer.ViewModels
 {
-    public class M_CustomerViewModel : ViewModelBase
+    public partial class M_CustomerViewModel : ViewModelBase
     {
         private readonly IM_CustomerService _service;
 
@@ -17,32 +19,35 @@ namespace AppTravel.Features.M_Customer.ViewModels
         /// <summary>
         /// 顧客コード
         /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
         private string _customerCode = string.Empty;
 
         /// <summary>
         /// 顧客名
         /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
         private string _customerName = string.Empty;
 
         /// <summary>
         /// メールアドレス
         /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
         private string _mailAddress = string.Empty;
 
         /// <summary>
         /// 入力ガイダンスメッセージ
         /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
         private string _message = string.Empty;
 
-        /// <summary>
-        /// 登録処理
-        /// </summary>
-        public RelayCommand SaveCommand { get; }
 
-        /// <summary>
-        /// クリア処理
-        /// </summary>
-        public RelayCommand ClearCommand { get; }
         #endregion
 
 
@@ -54,70 +59,7 @@ namespace AppTravel.Features.M_Customer.ViewModels
         {
             _service = service;
             Title = "顧客マスタ登録";
-
-            SaveCommand = new RelayCommand(Save, CanSave);
-            ClearCommand = new RelayCommand(Clear, CanClear);
         }
-
-        #region <プロパティ（CommunityToolkit.Mvvmを導入すると、不要になるかも）>
-
-        /// <summary>
-        /// 顧客コードプロパティ
-        /// </summary>
-        public string CustomerCode
-        {
-            get => _customerCode;
-            set
-            {
-                if (SetProperty(ref _customerCode, value))
-                {
-                    SaveCommand.RaiseCanExecuteChanged();
-                    ClearCommand.RaiseCanExecuteChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// 顧客名プロパティ
-        /// </summary>
-        public string CustomerName
-        {
-            get => _customerName;
-            set
-            {
-                if (SetProperty(ref _customerName, value))
-                {
-                    SaveCommand.RaiseCanExecuteChanged();
-                    ClearCommand.RaiseCanExecuteChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// メールアドレスプロパティ
-        /// </summary>
-        public string MailAddress
-        {
-            get => _mailAddress;
-            set
-            {
-                if (SetProperty(ref _mailAddress, value))
-                {
-                    SaveCommand.RaiseCanExecuteChanged();
-                    ClearCommand.RaiseCanExecuteChanged();
-                }
-            }
-        }
-
-        /// <summary>
-        /// 入力ガイダンスメッセージプロパティ
-        /// </summary>
-        public string Message
-        {
-            get => _message;
-            set => SetProperty(ref _message, value);
-        }
-        #endregion
 
         #region <画面操作に対応する処理>
         /// <summary>
@@ -130,9 +72,11 @@ namespace AppTravel.Features.M_Customer.ViewModels
         /// <remarks>顧客コード、顧客名、メールアドレスが全て入力されている時、保存可能</remarks>
         public bool CanSave()
         {
-            return !string.IsNullOrEmpty(CustomerCode)
-                   && !string.IsNullOrEmpty(CustomerName)
-                   && !string.IsNullOrEmpty(MailAddress);
+            bool isCanSave = !string.IsNullOrEmpty(CustomerCode)
+                                && !string.IsNullOrEmpty(CustomerName)
+                                && !string.IsNullOrEmpty(MailAddress);
+
+            return isCanSave;
         }
 
         /// <summary>
@@ -144,57 +88,40 @@ namespace AppTravel.Features.M_Customer.ViewModels
         /// </returns>
         public bool CanClear()
         {
-            return !(string.IsNullOrEmpty(CustomerCode)
-                        && string.IsNullOrEmpty(CustomerName)
-                        && string.IsNullOrEmpty(MailAddress)
-                        && string.IsNullOrEmpty(Message));
+            bool isCanClear =  !(string.IsNullOrEmpty(CustomerCode)
+                                    && string.IsNullOrEmpty(CustomerName)
+                                    && string.IsNullOrEmpty(MailAddress)
+                                    && string.IsNullOrEmpty(Message));
+            
+            return isCanClear;
         }
            
-
-        public void Save()
-        {
-            //if (!CanSave())
-            //{
-            //    Message = "入力内容を確認してください。";
-            //    return;
-            //}
-
-            //try
-            //{
-            //    Customer customer = new Customer(
-            //        CustomerCode,
-            //        CustomerName,
-            //        MailAddress
-            //    );
-            //    await _service.SaveAsync(customer);
-            //    Message = $"{customer.Code} : {CustomerName} を保存しました。";
-            //}
-            //catch (Exception)
-            //{
-
-            //}
-            //finally
-            //{
-            //}
-
-            _ = SaveAsync();
-        }
-
         /// <summary>
         /// 画面初期化
         /// </summary>
-        public void Clear()
+        [RelayCommand(CanExecute = nameof(CanClear))]
+        public async Task ClearAsync()
         {
             CustomerCode = string.Empty;
             CustomerName = string.Empty;
             MailAddress = string.Empty;
             Message = string.Empty;
-            ClearCommand.RaiseCanExecuteChanged();
         }
 
+        /// <summary>
+        /// 登録処理
+        /// </summary>
+        /// <returns></returns>
+        [RelayCommand(CanExecute =nameof(CanSave))]
         private async Task SaveAsync()
         {
-            // ToDo
+            Customer customer = new Customer(
+                CustomerCode, 
+                CustomerName, 
+                MailAddress
+            );
+            await _service.SaveAsync(customer);
+            Message = $"顧客コード: {CustomerCode} 顧客名: {CustomerName} を登録しました。";
         }
         #endregion
     }
