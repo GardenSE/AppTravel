@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
+using AppTravel.Features.M_Customer.Dtos;
 using AppTravel.Features.M_Customer.Models;
 using AppTravel.Features.M_Customer.Services;
 using AppTravel.MVVM.Base;
@@ -25,12 +26,36 @@ namespace AppTravel.Features.M_Customer.ViewModels
         private string _customerCode = string.Empty;
 
         /// <summary>
-        /// 顧客名
+        /// 顧客氏名（姓）
         /// </summary>
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
         [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
-        private string _customerName = string.Empty;
+        private string _customerLastName = string.Empty;
+
+        /// <summary>
+        /// 顧客氏名（名）
+        /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
+        private string _customerFirstName = string.Empty;
+
+        /// <summary>
+        /// 顧客氏名（姓・フリガナ）
+        /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
+        private string _customerLastNameKana = string.Empty;
+
+        /// <summary>
+        /// 顧客氏名（名・フリガナ）
+        /// </summary>
+        [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(SaveCommand))]
+        [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
+        private string _customerFirstNameKana = string.Empty;
 
         /// <summary>
         /// メールアドレス
@@ -46,8 +71,6 @@ namespace AppTravel.Features.M_Customer.ViewModels
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
         private string _message = string.Empty;
-
-
         #endregion
 
 
@@ -73,7 +96,10 @@ namespace AppTravel.Features.M_Customer.ViewModels
         public bool CanSave()
         {
             bool isCanSave = !string.IsNullOrEmpty(CustomerCode)
-                                && !string.IsNullOrEmpty(CustomerName)
+                                && !string.IsNullOrEmpty(CustomerLastName)
+                                && !string.IsNullOrEmpty(CustomerFirstName)
+                                && !string.IsNullOrEmpty(CustomerLastNameKana)
+                                && !string.IsNullOrEmpty(CustomerFirstNameKana)
                                 && !string.IsNullOrEmpty(MailAddress);
 
             return isCanSave;
@@ -89,9 +115,13 @@ namespace AppTravel.Features.M_Customer.ViewModels
         public bool CanClear()
         {
             bool isCanClear =  !(string.IsNullOrEmpty(CustomerCode)
-                                    && string.IsNullOrEmpty(CustomerName)
+                                    && string.IsNullOrEmpty(CustomerLastName)
+                                    && string.IsNullOrEmpty(CustomerFirstName)
+                                    && string.IsNullOrEmpty(CustomerFirstNameKana)
+                                    && string.IsNullOrEmpty(CustomerLastNameKana)
                                     && string.IsNullOrEmpty(MailAddress)
-                                    && string.IsNullOrEmpty(Message));
+                                    && string.IsNullOrEmpty(Message)
+                                );
             
             return isCanClear;
         }
@@ -103,7 +133,10 @@ namespace AppTravel.Features.M_Customer.ViewModels
         public async Task ClearAsync()
         {
             CustomerCode = string.Empty;
-            CustomerName = string.Empty;
+            CustomerLastName = string.Empty;
+            CustomerFirstName = string.Empty;
+            CustomerLastNameKana = string.Empty;
+            CustomerFirstNameKana = string.Empty;
             MailAddress = string.Empty;
             Message = string.Empty;
         }
@@ -115,13 +148,16 @@ namespace AppTravel.Features.M_Customer.ViewModels
         [RelayCommand(CanExecute =nameof(CanSave))]
         private async Task SaveAsync()
         {
-            Customer customer = new Customer(
+            CustomerRegister customerRegister = new CustomerRegister(
                 CustomerCode, 
-                CustomerName, 
+                CustomerLastName, 
+                CustomerFirstName, 
+                CustomerLastNameKana, 
+                CustomerFirstNameKana,
                 MailAddress
             );
-            await _service.SaveAsync(customer);
-            Message = $"顧客コード: {CustomerCode} 顧客名: {CustomerName} を登録しました。";
+            await _service.SaveAsync(customerRegister);
+            Message = $"顧客コード: {CustomerCode} 顧客名: {CustomerLastName} {CustomerFirstName} を登録しました。";
         }
         #endregion
     }

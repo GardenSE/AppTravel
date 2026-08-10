@@ -4,6 +4,7 @@ using System.Text;
 using AppTravel.Features.M_Customer.Repositories;
 using AppTravel.Features.M_Customer.ViewModels;
 using AppTravel.Features.M_Customer.Models;
+using AppTravel.Features.M_Customer.Dtos;
 
 namespace AppTravel.Features.M_Customer.Services
 {
@@ -25,7 +26,7 @@ namespace AppTravel.Features.M_Customer.Services
         /// 登録処理
         /// </summary>
         /// <returns></returns>
-        public async Task SaveAsync(Customer customoer)
+        public async Task SaveAsync(CustomerRegister customoerRegister)
         {
 
 

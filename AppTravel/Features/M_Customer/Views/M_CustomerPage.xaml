@@ -6,7 +6,7 @@
              x:DataType="viewModels:M_CustomerViewModel"
              Shell.NavBarIsVisible="True"
              Title="{Binding Path=Title}">
-    <VerticalStackLayout
+  <VerticalStackLayout
         Margin="10, 20"
         Padding="5"
         Spacing="10">
@@ -20,33 +20,55 @@
             WidthRequest="100"
             VerticalOptions="Start" 
             HorizontalOptions="Start" />
-        <Entry 
+    <Entry 
             WidthRequest="150"
             VerticalOptions="Start" 
             HorizontalOptions="Start"
             Text="{Binding Path=CustomerCode, Mode=TwoWay}"
+            MaxLength="6"
             />
-        <Label 
-             Text="顧客名"
+    <Label 
+             Text="顧客氏名"
              WidthRequest="100"
              VerticalOptions="Start" 
              HorizontalOptions="Start" />
-        <Entry 
-             WidthRequest="300"
+    <Entry 
+             WidthRequest="150"
              VerticalOptions="Start" 
              HorizontalOptions="Start"
-             Text="{Binding Path=CustomerName, Mode=TwoWay}"/>
-        <Label 
+             Text="{Binding Path=CustomerLastName, Mode=TwoWay}"/>
+    <Entry 
+             WidthRequest="150"
+             VerticalOptions="Start" 
+             HorizontalOptions="Start"
+             Text="{Binding Path=CustomerFirstName, Mode=TwoWay}"/>
+    <Label 
+         Text="顧客氏名フリガナ"
+         WidthRequest="100"
+         VerticalOptions="Start" 
+         HorizontalOptions="Start" />
+    <Entry 
+         WidthRequest="150"
+         VerticalOptions="Start" 
+         HorizontalOptions="Start"
+         Text="{Binding Path=CustomerLastNameKana, Mode=TwoWay}"/>
+    <Entry 
+         WidthRequest="150"
+         VerticalOptions="Start" 
+         HorizontalOptions="Start"
+         Text="{Binding Path=CustomerFirstNameKana, Mode=TwoWay}"/>
+    <Label 
             Text="メールアドレス"
             WidthRequest="100"
             VerticalOptions="Start" 
             HorizontalOptions="Start"/>
-        <Entry 
+    <Entry 
                Keyboard="Email" 
                WidthRequest="400"
                VerticalOptions="Start" 
                HorizontalOptions="Start"
-               Text="{Binding Path=MailAddress, Mode=TwoWay}"/>
+               Text="{Binding Path=MailAddress, Mode=TwoWay}" 
+               MaxLength="255" />
     <Button 
                 Text="保存" 
                 TextColor="Red"
