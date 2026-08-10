@@ -132,13 +132,16 @@ namespace AppTravel.Features.M_Customer.ViewModels
         [RelayCommand(CanExecute = nameof(CanClear))]
         public async Task ClearAsync()
         {
-            CustomerCode = string.Empty;
-            CustomerLastName = string.Empty;
-            CustomerFirstName = string.Empty;
-            CustomerLastNameKana = string.Empty;
-            CustomerFirstNameKana = string.Empty;
-            MailAddress = string.Empty;
-            Message = string.Empty;
+            await ExecuteAsync(async () =>
+            {
+                CustomerCode = string.Empty;
+                CustomerLastName = string.Empty;
+                CustomerFirstName = string.Empty;
+                CustomerLastNameKana = string.Empty;
+                CustomerFirstNameKana = string.Empty;
+                MailAddress = string.Empty;
+                Message = string.Empty;
+            });
         }
 
         /// <summary>
@@ -146,18 +149,21 @@ namespace AppTravel.Features.M_Customer.ViewModels
         /// </summary>
         /// <returns></returns>
         [RelayCommand(CanExecute =nameof(CanSave))]
-        private async Task SaveAsync()
+        public async Task SaveAsync()
         {
-            CustomerRegister customerRegister = new CustomerRegister(
-                CustomerCode, 
-                CustomerLastName, 
-                CustomerFirstName, 
-                CustomerLastNameKana, 
+            await ExecuteAsync(async () =>
+            {
+                CustomerRegister customerRegister = new CustomerRegister(
+                CustomerCode,
+                CustomerLastName,
+                CustomerFirstName,
+                CustomerLastNameKana,
                 CustomerFirstNameKana,
                 MailAddress
             );
-            await _service.SaveAsync(customerRegister);
-            Message = $"顧客コード: {CustomerCode} 顧客名: {CustomerLastName} {CustomerFirstName} を登録しました。";
+                await _service.SaveAsync(customerRegister);
+                Message = $"顧客コード: {CustomerCode} 顧客名: {CustomerLastName} {CustomerFirstName} を登録しました。";
+            });
         }
         #endregion
     }
