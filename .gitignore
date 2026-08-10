@@ -2,3 +2,4 @@
 AppTravel/bin/
 AppTravel/obj/
 *.user
+AppTravel.WebAPI/obj/
