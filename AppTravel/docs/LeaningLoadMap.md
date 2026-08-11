@@ -33,6 +33,11 @@
     - [学習項目](#学習項目-4)
     - [実践](#実践-1)
     - [到達目標](#到達目標-3)
+    - [DIとは](#diとは)
+    - [Interfaceとは](#interfaceとは)
+    - [DIPとは](#dipとは)
+    - [DI・Interface・DIPの関係](#diinterfacedipの関係)
+    - [DTOをViewModelでnewしたら、DI違反・DIP違反か](#dtoをviewmodelでnewしたらdi違反dip違反か)
 - [1-7. 画面遷移](#1-7-画面遷移)
     - [学習項目](#学習項目-5)
     - [実践](#実践-2)
@@ -47,7 +52,6 @@
     - [到達目標](#到達目標-4)
 - [1-11. Feature-Based構成](#1-11-feature-based構成)
     - [学習項目](#学習項目-9)
-  - [](#-1)
 - [第1段階の完成条件](#第1段階の完成条件)
     - [第1段階では「DB」は必須にしない](#第1段階ではdbは必須にしない)
 - [第2段階：SQLiteによるオフラインデータ保存](#第2段階sqliteによるオフラインデータ保存)
@@ -347,6 +351,72 @@ M_CustomerRepository
 > なぜ直接`new`せず、Interfaceを介してDIするのか
 
 を説明できる。
+
+<details>
+        <summary>学習メモ</summary>
+
+### DIとは
+- 依存するオブジェクトを外部から渡すこと
+  - クラスの中で直接 new しない様にする
+- これにより、
+  - 「何に依存するか」「どの実装をしようするか」を、呼び出し元のクラス自身が決めない様にする
+- 依存関係が無くなる訳ではない
+- DI ≠ Interface
+  - ServiceのコンストラクタでInterfaceではなくRepositoryを注入することもDIと言える
+    - 例：SQLiteの登録処理のRepositoryを直接注入する
+  - ただし、Interfaceと組み合わせることで、下記メリットがある
+    - 具体的な実装への依存を減らす
+    - 実装を差し替えることができる
+
+
+### Interfaceとは
+- 呼び出し元が具体的な実装に依存するのではなく、抽象に依存させる様にする仕組み
+- InterfaceそのものがDIではない
+- Interfaceを利用すると、例えば、
+  ```Text
+  IM_CustomerRepository
+       ↑
+       ├── SQLiteCustomerRepository
+       └── MariaDbCustomerRepository
+    ```
+    の様に、複数の実装を同じ抽象として扱える
+- ViewModelはM_CustomerServiceという具体的なクラスを知らなくてよい
+
+#### 抽象化の考え方
+例えば、
+``` Text
+    SQLiteに登録する
+    MariaDBに登録する
+```
+という具体的な処理を、
+``` Text
+    「顧客を登録する」
+``` 
+という業務上の操作として抽象化できる
+- 「SQLiteに登録する」「Web APIを実行する」のではなく、これらを「登録する」に抽象化する
+- 「登録する」の内容は、Serviceで具体的に実装する
+  - ServiceがRepositoryという抽象に依存し、そのRepositoryの実装としてSQLiteRepositoryやApiRepositoryを用意する
+- ただし、なんでもInterfaceにすれば良い訳ではない
+  - Interfaceを作ること自体が目的にならないようにする
+  - 「差し替えたい」「具体的な実装から切り離したい」「契約を定義したい」など、抽象化する理由を考える
+
+### DIPとは
+Dependency Inversion Principle（依存性逆転の原則）
+- 上位モジュールが具体的な実装に依存しない様にする設計原則
+  - 上位モジュールも下位モジュールも抽象に依存する
+  - 抽象が具体的な実装に依存しない
+
+### DI・Interface・DIPの関係
+| 概念        | 役割                           |
+| --------- | ---------------------------- |
+| DI        | 依存するオブジェクトを外部から渡す            |
+| Interface | 具体的な実装ではなく抽象として扱うための仕組み      |
+| DIP       | 具体的な実装への依存を避け、抽象に依存するという設計原則 |
+
+
+### DTOをViewModelでnewしたら、DI違反・DIP違反か
+- 通常、DTOのインスタンス化は違反にはならない
+</details>
 
 ---
 
