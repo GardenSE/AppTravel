@@ -433,15 +433,62 @@ Dependency Inversion Principle（依存性逆転の原則）
 - PageとViewModelの生成
 - DIと画面遷移の関係
 
+<details>
+  <summary>NavigationPage と Shell の違い</summary>
+
+  - Shell
+    - アプリ全体の構造（タブ、メニュー、階層）を1つのファイルで一元管理する
+      - URIを使った柔軟なルーティング（GoToAsync）が可能
+        - Routeを指定して移動する
+    - タブやサイドメニュー（Flyout）を持つ複雑なアプリや、標準的なモダンアプリで使用する
+    - Microsoftの推奨は、こちら
+  - NavigationPage
+    - スタック（積み重ね）形式でページの追加や削除（Push/Pop）を行い、純粋に「前の画面に戻る・進む」を管理する
+      - 進む場合、今いるページに対して次のページをPushする
+      - 戻る場合、今いるページからPopする
+    - 特定のページ内だけで行う限定的な階層遷移や、古いXamarinからの移行プロジェクト等で使用する
+</details>
+
 ### 実践
 
-以下の画面を作る。
+NavigationPageとShellの違いを理解する。
 
 ```text
-メニュー
- ├─ 顧客マスタ
- ├─ 旅程マスタ
- └─ 旅行日記
+1-7. 画面遷移
+ ├─ NavigationPageの基本
+ │   ├─ PushAsync
+ │   ├─ PopAsync
+ │   └─ Navigation Stack
+ │
+ ├─ Shellの基本
+ │   ├─ Shell
+ │   ├─ Route
+ │   ├─ GoToAsync
+ │   └─ Shell Navigation Stack
+ │
+ ├─ NavigationPageとShellの違い
+ │
+ ├─ Shell Navigation Parameter
+ │   ├─ Dictionary
+ │   ├─ IQueryAttributable
+ │   ├─ ApplyQueryAttributes
+ │   └─ パラメータとViewModel状態の違い
+ │
+ ├─ Route設計
+ │   ├─ 相対Route
+ │   └─ 絶対Route
+ │
+ ├─ DIとの関係
+ │   ├─ View/ViewModelの生成
+ │   ├─ ViewModelへのService注入
+ │   └─ DIライフタイム
+ │
+ └─ NavigationPage → Shell移行
+     ├─ Navigation Stackの違い
+     ├─ Routeへの置き換え
+     ├─ パラメータ移行
+     ├─ 戻る処理
+     └─ ViewModelのライフサイクル
 ```
 
 ---
